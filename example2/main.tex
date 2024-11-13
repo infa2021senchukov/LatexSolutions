@@ -1,0 +1,236 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+\usepackage{ bbold }
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+
+\hypersetup{  % добавил Артем 
+	pdftitle           = {Spectral theory of random matrices},
+	pdfauthor          = {},
+	pdfsubject         = {},
+	pdfstartview       = {FitH},
+	pdfborder          = {0 0 0},
+	bookmarksopen      = true,
+	bookmarksnumbered  = true,
+	bookmarksopenlevel = 2,
+	colorlinks = true,     linkcolor  = blue, % делает красивые цветные кликабеьные ссылки и сноски
+	citecolor  = blue, filecolor  = blue,
+	menucolor  = blue, urlcolor   = blue
+}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools,bm} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}} % добавил Артем
+\newcommand*\Tr{\mathop{\mathrm{Tr}}} % добавил Артем
+% Полная производная
+\newcommand{\D}[2]{\frac{\diff{#1}}{\diff{#2}}}% добавил Артем
+% Частная производная
+\newcommand{\PD}[2]{\frac{\partial{#1}}{\partial{#2}}}% добавил Артем
+
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+	\@ppsavesec
+	\stepcounter{@pps}
+	\setcounter{subsection}{0}%
+	\if@chapter@pp
+	\setcounter{chapter}{0}%
+	\renewcommand\@chapapp{\appendixname}%
+	\renewcommand\thechapter{\@Alph\c@chapter}%
+	\else
+	\setcounter{subsubsection}{0}%
+	\renewcommand\thesubsection{\@Alph\c@subsection}%
+	\fi
+	\if@pphyper
+	\if@chapter@pp
+	\renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+	\else
+	\renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+	\fi
+	\def\Hy@chapapp{appendix}%
+	\fi
+	\restoreapp
+}
+
+
+\makeatother
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Problem}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}[theorem]{Определение}
+
+
+\begin{document}
+
+
+    
+ \section{Конформная симметрия многомерных пространств}
+ \begin{defin}
+Конформное преобразование --- обратимое преобразование координат, сохраняющее метрический тензор с точностью до растяжений.
+\end{defin}
+\begin{equation}
+g_{\mu\nu}'(x')= \frac{\partial x^\alpha}{\partial x'^\mu}\frac{\partial x^\beta}{\partial x'^\nu}g_{\alpha\beta}(x)=\Lambda(x)g_{\mu\nu}(x)
+\end{equation}
+Рассмотрим преобразования метрического тензора в случае инфинитизимальных преобразований:
+\begin{equation}
+x'^\mu=x^\mu+\varepsilon^\mu(x)
+\end{equation}
+Подставляя в формулу $(1)$ получаем (при $d=1$ $\varepsilon$ - любая, при $d=2$ - Коши-Риман):
+\begin{equation}
+\partial_\mu\varepsilon^\nu + \partial_\nu\varepsilon^\mu = f(x)g_{\mu\nu}
+\end{equation}
+Где $f(x)$ считаем, взяв след обоих частей $(3)$:
+\begin{equation}
+f(x)=\frac{2}{d}\partial_\mu\varepsilon^\mu
+\end{equation}
+Далее везде полагаем $g_{\mu\nu}= \eta_{\mu\nu}$. Дифференцируя $(3)$, получаем:
+\begin{equation}
+2\partial_\mu\partial_\nu\varepsilon_\rho + \partial_\nu\varepsilon^\mu = \eta_{\mu\rho}\partial_\nu f
+\end{equation}
+Сворачивая с $\eta^{\mu\nu}$ получаем:
+\begin{equation}
+2\partial^2\varepsilon_\mu=(2-d)\partial_\mu f
+\end{equation}
+Дифференцируя и используя $(3)$:
+\begin{equation}
+(2-d)\partial_\mu\partial_\nu f = \eta^{\mu\nu}\partial^2 f
+\end{equation}
+Сворачивая с $\eta^{\mu\nu}$ :
+\begin{equation}
+(d-1)\partial^2 f =0
+\end{equation}
+Рассмотри случай $d>2$. Из $(7)$ получаем: $\partial_\mu\partial_\nu f = 0$. Значит, используя $(6)$:
+\begin{equation}
+f = A + B_\mu x^\mu \\
+\end{equation}
+\begin{equation}
+\varepsilon^\mu = a_mu + b_{\mu\nu}x^\nu+c_{\mu\nu\rho}x^\nu x^\rho \quad c_{\mu\nu\rho} = c_{\mu\rho\nu}
+\end{equation}
+$(3)$ и $(4)$ дают уравнения на $b_{\mu\nu}$:
+\begin{equation}
+b_{\mu\nu} = \alpha\eta_{\mu\nu}+m_{\mu\nu} \quad m_{\mu\nu} = -m_{\nu\mu}
+\end{equation}
+$(5)$ на $c_{\mu\rho\nu}$:
+\begin{equation}
+c_{\mu\nu\rho} = \eta_{\rho\nu}b_\nu + \eta_{\mu\nu}b_\rho - \eta_{\rho\nu}b_\mu \quad b_{\mu} = \frac{1}{d}c^\nu_{\nu\mu}
+\end{equation}
+Тогда $x_\mu$ инфинитизимально преобразуется как:
+\begin{equation}
+x'^\mu = x^\mu +2(x\cdot b)x^\mu - b^\mu x^2
+\end{equation}
+Интегрируя, а также пользуясь выражением для $\varepsilon^\mu$ получаем:
+  	\begin{center}
+			\begin{tabular}{|c|c|c|}
+				\hline
+       & эл-т группы & генератор        \\ \hline
+				трансляции & $x'^\mu = x^\mu + a^\mu$  &   $P_\mu=-i\partial_\mu$    \\ \hline
+    растяжения & $x'^\mu = \alpha x^\mu$  & $D=-ix^\mu\partial_\mu$      \\ \hline
+     повороты & $x'^\mu = M^\mu_\nu x^\nu$  & $L_{\mu\nu}=i(x^\mu\partial_\nu-x^\nu\partial_\mu)$      \\ \hline
+     спец. конф. преобр. & $x'^\mu = \frac{x^\mu-b^\mu x^2}{1-2(b\cdot x)+b^2x^2}$  & $K_{\mu}=-i(x^\mu x^\nu\partial_\nu-x^2\partial_\mu)$      \\ \hline
+			\end{tabular}
+\end{center}
+Переобозначая:
+\begin{equation}
+J_{\mu\nu} = L_{\mu\nu} \quad J_{-1,0} = D \quad J_{-1,\mu} = \frac{1}{2}(P_\mu-K_\mu)\quad J_{0,\mu} = \frac{1}{2}(P_\mu+K_\mu)
+\end{equation}
+Получим коммутационные соотношения, доказывающие изоморфизм конформной группы размерности $d$ и $SO(d+1,1)$:
+\begin{equation}
+[J_{ab},J_{cd}] = i(\eta{ab}J_{bc}+\eta{bc}J_{ad}-\eta{ac}J_{bd}-\eta{bd}J_{ac})
+\end{equation}
+Замети
+	\section{ Конформная симметрия в двух измерениях}
+В двух измерениях уравнение $(3)$ принимает вид:
+\begin{equation}
+\partial_0\varepsilon_0 = \partial_1\varepsilon_1 \quad \partial_0\varepsilon_1 = -\partial_1\varepsilon_0
+\end{equation}
+Что соответствует условиям Коши - Римана для функции $\varepsilon(x)$. Перейдя в комплексные координаты , можно заметить, что все инфинитизимальные преобразования задаются некоторой голоморфной функцией $f(z)$:
+\begin{equation}
+z'=z+f(z)\quad
+\end{equation}
+  \section{Алгебра Витта и ее центральное расширение алгебра Вирасоро.}
+ Пусть в общем случае $f(z)$ - мероморфная функция, имеющая полюса за пределами некоторого открытого множества, тогда в окресности нуля она раскладывается в ряд Лорана.
+ \begin{equation}
+z'=z+\varepsilon(z)=z+\sum_{n\in\mathbb{Z}}\varepsilon_n(-z^{n+1}) 
+\end{equation}
+Данное инфинитизимальное преобразование определяет генераторы некоторой алгебры Ли:
+ \begin{equation}
+l_n = -z^{n+1}\partial_z
+\end{equation}
+Их количество бесконечно, а коммутационные соотношения следующие:
+\begin{equation}
+[l_m,l_n] = (m-n)l_{m+n}
+\end{equation}
+ \begin{defin}
+Алгебру Ли с бесконечным числом элементов, удовлетворяющих данным комутационным соотношениям называют алгеброй Витта.
+\end{defin}
+Рассмотрим центральное расширение построенной алгебры. Дополним ее некоторой комплексной константой $c$, коммутирующей со всеми элементами, но влияющую на коммутационные соотношения.
+\begin{equation}
+[L_m,L_n] = (m-n)L_{m+n}+cp(n,m)
+\end{equation}
+Так как коммутатор обязан быть антисимметричным и удовлетворять тождеству Якоби, получим ограничение на функцию $p(n,m)$:
+\begin{equation}
+p(n,m)=\frac{1}{12}(n+1)n(n-1)\delta_{m,-n}
+\end{equation}
+Использована нормировка $p(2,-2)=\frac{1}{2}$.
+ \begin{defin}
+Алгебра Вирасоро - центральное расширение алгебры Витта с коммутационными соотношениями:
+\begin{equation}
+[L_m,L_n] = (m-n)L_{m+n}+\frac{c}{12}(m^3-m)\delta_{m,-n}
+\end{equation}
+\end{defin}
+  \section{Структура группы Мёбиуса $SL(2,R)$.}
+  Очевидно, что группа Мебиуса всех дробно линейных преобразований комплексной плоскости изоморфна группе $SL(2,R)$/\{$\pm$ 1\}. По теореме о жордановой нормальной форме любую матрицу $2\times2$ можно представить в одном из следующих видов:
+ \begin{equation}
+ 1.
+\begin{pmatrix}
+\lambda & 1\\
+0 & \lambda
+\end{pmatrix}
+\quad z'= z + \frac{1}{\lambda}
+\end{equation}
+- параболическое преобразование
+ \begin{equation}
+ 1.
+\begin{pmatrix}
+\lambda & 0\\
+0 & \mu
+\end{pmatrix}
+\quad z'= cz
+\end{equation}
+- эллиптическое в случае $|c|=1$
+- гиперболическое в случае $ c \in\mathbb{R}$ и $c>0$. 
+Других преобразований в группе Мебиуса нет.
+\end{document}
