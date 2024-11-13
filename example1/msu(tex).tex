@@ -1,0 +1,191 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+\usepackage{ bbold }
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+
+\hypersetup{  % добавил Артем 
+	pdftitle           = {Spectral theory of random matrices},
+	pdfauthor          = {},
+	pdfsubject         = {},
+	pdfstartview       = {FitH},
+	pdfborder          = {0 0 0},
+	bookmarksopen      = true,
+	bookmarksnumbered  = true,
+	bookmarksopenlevel = 2,
+	colorlinks = true,     linkcolor  = blue, % делает красивые цветные кликабеьные ссылки и сноски
+	citecolor  = blue, filecolor  = blue,
+	menucolor  = blue, urlcolor   = blue
+}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools,bm} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+
+\newcommand*\diff{\mathop{}\!\mathrm{d}} % добавил Артем
+\newcommand*\Tr{\mathop{\mathrm{Tr}}} % добавил Артем
+% Полная производная
+\newcommand{\D}[2]{\frac{\diff{#1}}{\diff{#2}}}% добавил Артем
+% Частная производная
+\newcommand{\PD}[2]{\frac{\partial{#1}}{\partial{#2}}}% добавил Артем
+
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+	\@ppsavesec
+	\stepcounter{@pps}
+	\setcounter{subsection}{0}%
+	\if@chapter@pp
+	\setcounter{chapter}{0}%
+	\renewcommand\@chapapp{\appendixname}%
+	\renewcommand\thechapter{\@Alph\c@chapter}%
+	\else
+	\setcounter{subsubsection}{0}%
+	\renewcommand\thesubsection{\@Alph\c@subsection}%
+	\fi
+	\if@pphyper
+	\if@chapter@pp
+	\renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+	\else
+	\renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+	\fi
+	\def\Hy@chapapp{appendix}%
+	\fi
+	\restoreapp
+}
+
+
+\makeatother
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Problem}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}[theorem]{Определение}
+
+
+\begin{document}
+
+
+    
+ \section{Элементы теории представлений алгебры $\mathfrak{sl_2}$}
+ \begin{defin}
+$\mathfrak{sl_2}(\mathbb{C})$ --- это алгебра Ли матриц 2 × 2 с нулевым следом.
+\end{defin}
+
+Алгебру Ли $\mathfrak{sl_2}(\mathbb{C})$ можно задать стандартными образующими $e$, $f$, $h$ со следующими коммутационными соотношениями:
+\begin{equation}
+    [e, f] = h\quad
+ [h, e] = 2e\quad
+ [h, f] = -2f
+\end{equation}
+
+Пусть $(V, \rho)$ --- конечномерное представление алгебры Ли $\mathfrak{sl_2}(\mathbb{C})$, то есть $V$ --- конечномерное векторное пространство, а $\rho(g)$ --- линейные операторы, действующие на нём, $g \in \mathfrak{sl_2}(\mathbb{C})$.
+
+
+    Пусть $v \in V$ --- собственный вектор оператора $\rho(h)$ с собственным значением $\mu$. Из коммутационных соотношений получается, что вектор $\rho(e) v$ --- собственный для $\rho(h)$ с собственным значением $\mu + 2$, а вектор $\rho(f) v$ --- собственный для $\rho(h)$ с собственным значением $\mu - 2$.
+
+
+    Так как ввиду конечномерности данная цепочка должна обрываться, существует собственный для $\rho(h)$ вектор $v \in V$ такой, что $\rho(e) v = 0$. Такие вектора называются особыми. Пусть $v_{\lambda}$ --- особый вектор. Можно построить цепочку собственных векторов для $\rho(h)$, последовательно действуя на $v_{\lambda}$ оператором $\rho(f)$, а точнее рассмотреть подпространство $V_{\lambda}$, натянутое на вектора вида $\rho(f) ^ k v_{\lambda}$. $V_{\lambda}$ является подпредставлением в $V$ и конечномерно тогда и только тогда, когда $\lambda \in \mathbb{Z}_{\ge 0}$.
+
+
+
+Таким образом, всякое неприводимое представление изоморфно $V_n$ для некоторого $n \in \mathbb{Z}_{\ge 0}$. Так как $dim V_n = n + 1$, то неприводимое представление данной размерности единственно с точностью до изоморфизма.
+
+
+	\section{Представления алгебры Вирасоро, модули Верма и их характеры}
+    Алгебра Вирасоро задается коммутационными соотношениями:
+    	 \begin{equation}
+ 	    [L_n,L_m]=(n-m)L_{n+m}+\frac{c}{12}n(n^2-1)\delta_{n+m,0}.
+ 	\end{equation}	
+  Построим ее представление по аналогии с тем, как было построено представление алгебры $su(2)$ в квантовой механике (так же будем использовать бра и кет обозначения). \\
+  Так как ни одна пара генераторов не коммутирует, перейдем в базис одного из них - $L_0$.  Обозначим за $\ket{h}$ состояние со старшим весом с собственным значением $h$. Так как:
+  	\begin{equation}
+ 	    [L_0,L_m]=-mL_{m} \quad m >0 
+ 	\end{equation}	
+Точно так же как и в алгебре $su(2)$, $L_m$ - понижающий оператор, а  $L_{-m}$ - повышающий. Мы должны принять:
+ 	\begin{equation}
+ 	    L_n\ket{h}=0 \quad n >0, 
+ 	\end{equation}
+  что соответствует физическому смыслу $L_{n}$ как операторов, действующих на примарные поля, если положить: 
+  \begin{equation}
+ 	    \ket{h} = \Phi_{h}(0) \ket{0}\quad
+            \bra{h} =\bra{0} \Phi(\infty), 
+ 	\end{equation}
+        где  $\ket{0}$ - состояние вакуума.\\
+        Рассмотрим оператор $ L_{\bold{-k}} = L_{-k_1}...L_{-k_n}$:
+         Так как $L_{-m}$ - повышающий оператор, $ L_{\bold{-k}}\ket{h}$ - собственный вектор оператора $L_0$. Все остальные базисные вектора данного пространства получаются действием $L_{\bold{-k}}\ket{h}$ (применением повышающего оператора всеми возможными способами)\\
+         \textbf{Определение} Модуль Верма $V_{h,c}$ - представление алгебры Вирасоро, заданное следующими соотношениями $\{  L_{\bold{-k}}\ket{h}: 1\geq k_1\geq k_2\geq...,  L_n\ket{h}=0 \quad n >0,  L_0\ket{h}=h\ket{h} \}$
+         Построенное таким образом представление распадается на прямую сумму конечномерных подпространств $V_{h, N}$:
+           \begin{equation}
+ 	    V_{h, N} = span\{L_{\bold{-k}}\ket{h}:k_1+...+k_n=N\}
+ 	\end{equation}
+  Данные подпространства являются собственными для $L_0$:
+         \begin{equation}
+ 	   L_0L_{\bold{-k}}\ket{h}=(h+N)L_{\bold{-k}}\ket{h}
+ 	\end{equation}
+  В качестве примера можно привести таблицу нескольких первых состояний $N$:
+  	\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+      0 & $\ket{h}$         \\ \hline
+				1 & $L_{-1}\ket{h}$         \\ \hline
+    2 & $L_{-2}\ket{h}$, $L_{-1}^2\ket{h}$        \\ \hline
+     3 & $L_{-3}\ket{h}$, $L_{-1}L_{-2}\ket{h}$, $L_{-1}^3\ket{h}$         \\ \hline
+			\end{tabular}
+\end{center}
+Введем функцию характера модуля Верма:
+           \begin{equation}
+ 	   \chi(t) = Tr(t^{L_0-\frac{c}{24}})|_{V_h}=\sum_{N=0}^{\infty}Tr(t^{L_0-\frac{c}{24}})|_{V_{h,N}}=\sum_{n=0}^{\infty}dim(n+h)q^{n+h-\frac{c}{24}}
+ 	\end{equation}
+  Таким образом, фуеция характера - производящая функция размерности каждого подпространства. Так как $dim V_{h,N}=p(N)$, то, пользуясь следующими тождествами для функции Эйлера:
+             \begin{equation}
+ 	  \frac{1}{\varphi(t)}=\prod_{n=1}^{\infty}\frac{1}{1-q^n}=\sum_{n=0}^{\infty}p(n)t^n,
+ 	\end{equation}
+  получаем:
+   \begin{equation}
+ 	  \chi(t) = \frac{t^{h-\frac{c}{24}}}{\prod_{n=1}^{\infty}(1-t^k)}
+ 	\end{equation}
+  \section{Вырожденные представления}
+  В зависимости от значений $h$, $c$ в построенном модуле Верма могут находиться вектора с нулевой или отрицательной нормой, в случае унитарной теории они должны быть удалены из представления. Для их нахождения приравняем к нулю определитель Каца - определитель матрицы со следующими матричными элементами: 
+     \begin{equation}
+ 	  \bra{h}\prod_{i}L_{k_i}\prod_{j}L_{-m_j}\ket{h}\quad \sum_{i}k_i=\sum_{j}k_j=N
+     \end{equation}
+     Существует общая формула:
+          \begin{equation}
+ 	  det M_N=\alpha_N\prod_{p,q\leq N, p,q> 0}(h-h_{p,q}(c))^{P(N-pq)}\end{equation} 
+    \begin{equation*}
+    h_{p,q}(m)=\frac{((m+1)p-mq)^2-1}{4m(m+1)} \quad m = -\frac{1}{2}\pm\frac{1}{2}\sqrt{\frac{25-c}{1-c}}
+     \end{equation*}
+     Если при каком-то значении $n$ вектор $\ket{h+n}$ оказался равным нулю, то существует $P(N-n)$ нулевых состояний.
+     
+\end{document}
